@@ -1,0 +1,61 @@
+---
+import '@/styles/globals.css'
+import Layout from '../layouts/Layout.astro';
+import Hero from '@/components/Hero';
+import Experience from '@/components/Experience';
+import Activities from '@/components/Activities';
+import PortfolioFeed from '@/components/PortfolioFeed';
+import Footer from '@/components/Footer';
+import { config } from '../data/config';
+
+---
+
+<Layout title={config.siteTitle}>
+  <head>
+    <meta name="description" content={config.description} />
+    <meta name="keywords" content={config.keywords} />
+    <link rel="icon" href={config.favicon} />
+    <meta property="og:title" content={config.siteTitle} />    <meta property="og:description" content={config.description} />
+    <meta property="og:image" content="/path/to/image.jpg" />    <meta property="og:url" content="https://widadbanane-portfolio.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={config.siteTitle} />
+    <meta name="twitter:description" content={config.description} />
+    <meta name="twitter:image" content="/path/to/image.jpg" />
+  </head>  <main class="min-h-screen bg-background">
+    <div class="fixed top-4 right-4 z-50">
+      <button class="rounded-full h-10 w-10 p-2 border bg-background" id="theme-toggle">
+        <span class="dark:hidden block">🌙</span>
+        <span class="hidden dark:block">☀️</span>
+        <span class="sr-only">Toggle theme</span>
+      </button>
+    </div>
+    <Hero client:load />
+    <Experience client:visible />
+    <Activities client:visible />
+    <PortfolioFeed client:visible />
+    <Footer client:visible />
+  </main>
+</Layout>
+
+<script>
+  const themeToggle = document.getElementById('theme-toggle');
+  
+  // Check for saved theme preference or default to dark theme
+  if (typeof localStorage !== 'undefined') {
+    if (!localStorage.getItem('theme')) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  }
+
+  // Theme toggle functionality
+  themeToggle?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
+
+</file>
+</boltArtifact>
